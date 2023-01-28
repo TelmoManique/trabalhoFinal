@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>All Tasks</title>
+  <style>
+    body {
+      background-image: url(https://cdn.pixabay.com/photo/2018/06/23/21/00/typewriter-3493485_960_720.jpg);
+	  background-size: cover;
+      font-family: Georgia, serif;
+      color: #333;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      text-align: left;
+      background-color: #dcdcdc;
+      padding: 20px;
+	  padding-bottom: 40px
+      font-size: 32px;
+    }
+    .main-text {
+      font-size: 18px;	  
+      margin: 20px;
+	  margin-top: 40px;
+	  margin-bottom: 40px;
+      text-align: left;
+    }
+    .button {
+      display: inline-block;
+      border-radius: 4px;
+      background-color: #333;
+      border: none;
+      color: white;
+      text-align: center;
+      font-size: 16px;
+      padding: 20px;
+      width: 200px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .button span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+    .button span:after {
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+    .button:hover span {
+      padding-right: 25px;
+    }
+    .button:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+    .table {
+      text-align: left; /* Aligns the text in the cells to the left */
+      font-size: 18px; /* Sets the font size for the table */
+      border-collapse: collapse
+    }
+    .table th, .table td {
+      border: 1px solid #333; /* Adds a border to the cells */
+      padding: 10px; /* Adds padding to the cells */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>All Clientes</h1>
+    <div>
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>Document</th>
+          <th>Hash</th>
+          <th>Language</th>
+          <th>Status</th>
+          <th>Duration</th>
+          <th>Time Start</th>
+          <th>Time End</th>
+          <th>User ID</th>
+          <th>Edit</th>
+          <th>Remove</th>
+        </tr>
+        <tr th:each="obj : ${task_list}">
+          <td th:text="${obj.id}"></td>
+          <td th:text="${obj.document}"></td>
+          <td th:text="${obj.hash}"></td>
+          <td th:text="${obj.language}"></td>
+          <td th:text="${obj.status}"></td>
+          <td th:text="${obj.duration}"></td>
+          <td th:text="${#dates.format(obj.int_date, 'yyyy-MM-dd HH:mm:ss')}"></td>
+          <td th:text="${#dates.format(obj.end_date, 'yyyy-MM-dd HH:mm:ss')}"></td>
+          <td th:text="${obj.cliente_id}"></td>
+          <td>
+            <form th:action="@{/admin/editTask/} + ${obj.id}" metho="GET">
+              <button>Edit</button>
+            </form>
+          </td>
+          <td>
+            <form th:action="@{/admin/removeTask/} + ${obj.id}" method="GET">
+              <button>Remove</button>
+            </form>
+          </td>
+        </tr>
+      </table>
+    </div>
+</body>
+</html>

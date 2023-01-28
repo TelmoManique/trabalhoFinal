@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>My Minimalistic Page</title>
+  <style>
+    body {
+      background-image: url(https://cdn.pixabay.com/photo/2018/06/23/21/00/typewriter-3493485_960_720.jpg);
+	  background-size: cover;
+      font-family: Georgia, serif;
+      color: #333;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      text-align: left;
+      background-color: #dcdcdc;
+      padding: 20px;
+	   padding-bottom: 40px
+      font-size: 32px;
+    }
+    .main-text {
+      font-size: 18px;
+      margin: 20px;
+	  margin-top: 40px;
+	  margin-bottom: 40px;
+      text-align: center;
+    }
+    .button-error {
+      display: inline-block;
+      border-radius: 4px;
+      background-color: #333;
+      border: none;
+      color: white;
+      text-align: center;
+      font-size: 16px;
+      padding: 20px;
+      width: 200px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .button {
+      display: inline-block;
+      border-radius: 4px;
+      background-color: #333;
+      border: none;
+      color: white;
+      text-align: center;
+      font-size: 16px;
+      padding: 20px;
+      width: 200px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .button span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+    .button span:after {
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+    .button:hover span {
+      padding-right: 25px;
+    }
+    .button:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>The Language Finder</h1>
+  <div class="main-text">
+    Error
+    <div>
+      <p th:text="${error}">Error Message</p>
+    </div>
+  </div>
+  <a class="button-error" th:href="@{/}"> Go back</a>
+</div>
+</body>
+</html>
+</title>
+</head>
+</html>

@@ -1,0 +1,38 @@
+version: '3.3'
+services:
+	db:
+		image: mysql
+		container_name: mysql
+		command: --init-file /initializer.sql
+		environment:
+			MYSQL_USER: 'admin'
+			MYSQL_PASSWORD: 'password'
+			MYSQL_ROO_PASSWORD: 'admin'
+		ports:
+			- '3306:3306'
+		expose:
+			- '3306'
+		volumes:
+			- ./initializer.sql
+	naming_server:
+		image: naming_server:lastest
+		container_name: naming_server
+		ports:
+			- '8761-8761'
+		expose:
+			- '8761'
+	gateway:
+		image:
+		container_name: gateway
+
+	cliente_manager:
+		image:
+		container_name: cliente_manager
+
+	task_manager:
+		image:
+		container_name: task_manager
+
+	tli:
+		image:
+		container_name: tli
