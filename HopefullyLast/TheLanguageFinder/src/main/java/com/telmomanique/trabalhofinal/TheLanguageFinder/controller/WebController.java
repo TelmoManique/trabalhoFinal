@@ -5,11 +5,15 @@ import com.telmomanique.trabalhofinal.TheLanguageFinder.proxy.ClienteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -19,9 +23,24 @@ public class WebController {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    ClienteController clienteController;
+    @Autowired
+    AdminController adminController;
+
     //URI:  GET     "/"
     @GetMapping("/")
     public ModelAndView index(ModelAndView modelAndView){
+        if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
+            Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+            for(GrantedAuthority g :authorities){
+                System.out.println(g.toString());
+                if(g.toString().compareTo("ROLE_CLIENTE") == 0)
+                    return clienteController.index(modelAndView);
+                if(g.toString().compareTo("ROLE_ADMIN") == 0)
+                    return adminController.index(modelAndView);
+            }
+        }
         modelAndView.setViewName("index");
         return modelAndView;
     }
@@ -48,7 +67,8 @@ public class WebController {
         Cliente cliente = new Cliente();
         cliente.setUsername(username);
         cliente.setPassword(bCryptPasswordEncoder.encode(password));
-        cliente.setRole("CLIENTE");
+        //cliente.setRole("ROLE_UNCERTIFIED");
+        cliente.setRole("ROLE_CLIENTE");
         cliente.setBlocked(false);
         cliente.setBanned(false);
 

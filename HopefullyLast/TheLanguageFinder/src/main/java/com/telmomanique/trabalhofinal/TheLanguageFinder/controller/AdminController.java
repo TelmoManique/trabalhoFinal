@@ -4,9 +4,11 @@ import com.telmomanique.trabalhofinal.TheLanguageFinder.models.Cliente;
 import com.telmomanique.trabalhofinal.TheLanguageFinder.models.Task;
 import com.telmomanique.trabalhofinal.TheLanguageFinder.proxy.ClienteProxy;
 import com.telmomanique.trabalhofinal.TheLanguageFinder.proxy.TaskProxy;
+import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,20 +51,48 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/banCliente/{id}" , method = RequestMethod.POST)
-    public void banClient(ModelAndView modelAndView, @PathVariable("id") Integer id){
-        ResponseEntity<Cliente> response= clienteProxy.getClienteById(id);
+    public ModelAndView banClient(ModelAndView modelAndView, @PathVariable("id") Integer id){
+        ResponseEntity<Cliente> response= clienteProxy.banCliente(id);
         if(response.getStatusCode() != HttpStatus.OK)
             throw new ResponseStatusException(response.getStatusCode());
 
-        getAllProfiles(modelAndView);
+        return getAllProfiles(modelAndView);
     }
 
     @RequestMapping(value = "/blockCliente/{id}" , method = RequestMethod.POST)
-    public void blockClient(ModelAndView modelAndView, @PathVariable("id") Integer id){
+    public ModelAndView blockClient(ModelAndView modelAndView, @PathVariable("id") Integer id){
         ResponseEntity<Cliente> response= clienteProxy.blockCliente(id);
         if(response.getStatusCode() != HttpStatus.OK)
             throw new ResponseStatusException(response.getStatusCode());
 
-        getAllProfiles(modelAndView);
+        return getAllProfiles(modelAndView);
+    }
+
+    @RequestMapping(value = "/certifyCliente/{id}" , method = RequestMethod.POST)
+    public ModelAndView certifyClient(ModelAndView modelAndView, @PathVariable("id") Integer id){
+        ResponseEntity<Cliente> response= clienteProxy.getClienteById(id);
+        if(response.getStatusCode() != HttpStatus.OK)
+            throw new ResponseStatusException(response.getStatusCode());
+
+        response.getBody().setRole("ROLE_CLIENTE");
+        response= clienteProxy.updateCliente(response.getBody());
+        if(response.getStatusCode() != HttpStatus.OK)
+            throw new ResponseStatusException(response.getStatusCode());
+
+        return getAllProfiles(modelAndView);
+    }
+
+    @RequestMapping(value= "/promoteCliente/{id}", method = RequestMethod.POST)
+    public ModelAndView promoteCliente(ModelAndView modelAndView, @PathVariable("id") Integer id){
+        ResponseEntity<Cliente> response= clienteProxy.getClienteById(id);
+        if(response.getStatusCode() != HttpStatus.OK)
+            throw new ResponseStatusException(response.getStatusCode());
+
+        response.getBody().setRole("ROLE_ADMIN");
+        response= clienteProxy.updateCliente(response.getBody());
+        if(response.getStatusCode() != HttpStatus.OK)
+            throw new ResponseStatusException(response.getStatusCode());
+
+        return getAllProfiles(new ModelAndView());
     }
 }

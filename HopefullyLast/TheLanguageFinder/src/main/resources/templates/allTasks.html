@@ -109,7 +109,7 @@
           <td th:text="${obj.duration}"></td>
           <td th:text="${#dates.format(obj.int_date, 'yyyy-MM-dd HH:mm:ss')}"></td>
           <td th:text="${#dates.format(obj.end_date, 'yyyy-MM-dd HH:mm:ss')}"></td>
-          <td th:text="${obj.cliente_id}"></td>
+          <td th:text="${obj.cliente_id.id}"></td>
           <td>
             <form th:action="@{/admin/editTask/} + ${obj.id}" metho="GET">
               <button>Edit</button>
@@ -123,5 +123,9 @@
         </tr>
       </table>
     </div>
+  </div>
+  <div>
+    <button class="button" onclick="location.href='/'"><span>Home</span></button>
+  </div>
 </body>
 </html>

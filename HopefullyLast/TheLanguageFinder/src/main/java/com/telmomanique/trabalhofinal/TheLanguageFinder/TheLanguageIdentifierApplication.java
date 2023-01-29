@@ -13,5 +13,4 @@ public class TheLanguageIdentifierApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TheLanguageIdentifierApplication.class, args);
 	}
-
 }

@@ -98,6 +98,7 @@
           <th>Remove</th>
           <th>Ban</th>
           <th>Block</th>
+          <th th:if="@{obj.role != 'ROLE_ADMIN'}">Promote</th>
         </tr>
         <tr th:each="obj : ${cliente_list}">
           <td th:text="${obj.id}"></td>
@@ -132,8 +133,17 @@
               <button th:if="${!obj.isBlocked}">Block</button>
             </form>
           </td>
+          <td th:if="@{obj.role != 'ROLE_ADMIN'}">
+            <form th:action="@{/admin/promoteCliente/} + ${obj.id}" method="POST">
+              <button>Promote</button>
+            </form>
+          </td>
         </tr>
       </table>
     </div>
+  </div>
+  <div>
+    <button class="button" onclick="location.href='/'"><span>Home</span></button>
+  </div>
 </body>
 </html>
