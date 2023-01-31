@@ -3,6 +3,7 @@ package com.telmomanique.trabalhofinal.TheLanguageFinder.models;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.Duration;
 
 
 @Data
@@ -13,7 +14,8 @@ public class Task {
     private String hash;
     private String language;
     private String status;
-    private int duration;
+    private Duration duration;
+    private String type;
     private Timestamp int_date;
     private Timestamp end_date;
 

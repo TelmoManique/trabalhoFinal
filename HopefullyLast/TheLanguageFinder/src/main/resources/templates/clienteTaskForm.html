@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Language Identifier</title>
+  <title>The Language Identifier</title>
   <style>
     body {
       background-image: url(https://cdn.pixabay.com/photo/2018/06/23/21/00/typewriter-3493485_960_720.jpg);
@@ -29,7 +29,7 @@
       font-size: 32px;
     }
     .main-text {
-      font-size: 18px;	  
+      font-size: 18px;
       margin: 20px;
 	  margin-top: 40px;
 	  margin-bottom: 40px;
@@ -73,18 +73,27 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>The Language Identifier</h1>
-    <div class="main-text">
-      This website is used to identify what language is contained in the text or files submitted.
-    </div>
-    <div class="main-text">
-      <button class="button" onclick="location.href='/cliente/taskForm'"><span>Let's start</span></button>
-    </div>
-  </div>
-  <div class="container">
-    <button class="button" onclick="location.href='/cliente/profile'"><span>My Profile</span></button>
-    <button class="button" onclick="location.href='/logout'"><span>Logout</span></button>
-  </div>
+<div class="container">
+  <h1>Task Form</h1>
+  <form action="/cliente/createTask/text" method="GET">
+    <label for="url">Texto:</label>
+    <input type="text" id="text" name="text"><br>
+    <button type="submit" class="button" ><span>Identificar Tipo e Língua</span></button>
+  </form>
+  <form action="/cliente/createTask/URL" method="GET">
+    <label for="url">URI of the media:</label>
+    <input type="text" id="url" name="url"><br>
+    <button type="submit" class="button" ><span>Identificar Tipo e Língua</span></button>
+  </form>
+  <br>
+  <form action="/cliente/createTask/file" method="POST" enctype="multipart/form-data">
+    <label for="file">Select a file:</label>
+    <input type="file" id="file" name="file"><br>
+    <button type="submit" class="button" ><span>Identificar Tipo e Língua</span></button>
+  </form>
+</div>
+<div>
+  <button class="button" onclick="location.href='/'"><span>Home</span></button>
+</div>
 </body>
 </html>

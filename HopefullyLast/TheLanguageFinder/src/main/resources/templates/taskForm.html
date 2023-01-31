@@ -75,15 +75,20 @@
 <body>
 <div class="container">
   <h1>Task Form</h1>
+  <form action="/public/createTask/text" method="GET">
+    <label for="url">Texto:</label>
+    <input type="text" id="text" name="text"><br>
+    <button type="submit" class="button" ><span>Identificar Tipo e Língua</span></button>
+  </form>
   <form action="/public/createTask/URL" method="POST">
     <label for="url">URI of the media:</label>
-    <input type="text" id="url" name="url">
+    <input type="text" id="url" name="url"><br>
     <button type="submit" class="button" ><span>Identificar Tipo e Língua</span></button>
   </form>
   <br>
   <form action="/public/createTask/file" method="POST" enctype="multipart/form-data">
     <label for="file">Select a file:</label>
-    <input type="file" id="file" name="file">
+    <input type="file" id="file" name="file"><br>
     <button type="submit" class="button" ><span>Identificar Tipo e Língua</span></button>
   </form>
 </div>

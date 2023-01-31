@@ -27,9 +27,9 @@ public class TaskService {
         return taskRepository.getTaskById(id);
     }
     public boolean serviceHashExist(String hash) {
-        if( taskRepository.getHashCount(hash).getId() >0 )
-            return true;
-        return false ;
+        if( taskRepository.getHashCount(hash) == null || taskRepository.getHashCount(hash).getId() < 0 )
+            return false;
+        return true ;
     }
     public List<Task> serviceGetTaskByUser(Integer id) {
         return  taskRepository.getTaskByUserId(id);

@@ -13,6 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -42,15 +50,46 @@ public class ClienteController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/createTask/URL" , method = RequestMethod.POST)
-    public void createTaskURL (@RequestParam String url){
+    //URI   POST: /taskForm
+    @GetMapping("/taskForm")
+    public ModelAndView taskForm(ModelAndView modelAndView){
+        modelAndView.setViewName("clienteTaskForm");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/createTask/text", method = RequestMethod.GET)
+    public void createTaskText (@RequestParam("text") String texto){
+        Task task = new Task();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        task.setCliente_id(clienteProxy.getClienteByName(username).getBody());
+        task.setDocument(texto);
+        task.setType("TEXT");
+        taskProxy.createTaskText(task);
+    }
+
+    @RequestMapping(value="/createTask/URL" , method = RequestMethod.GET)
+    public void createTaskURL (@RequestParam("url") String url){
         if(url.isEmpty()|| url.isBlank())
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+
+        Task task = new Task();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        task.setCliente_id(clienteProxy.getClienteByName(username).getBody());
+        task.setDocument(url);
+        task.setType("URL");
+        taskProxy.createTaskURL(task);
     }
-    @PostMapping("/createTask/file")
+
+    @RequestMapping(value ="/createTask/file", method = RequestMethod.POST)
     public void  createTaskFile (@RequestParam("file") MultipartFile multiFile){
         if(multiFile == null)
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
 
+        Task task = new Task();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        task.setCliente_id(clienteProxy.getClienteByName(username).getBody());
+        task.setDocument(multiFile.getName());
+        task.setType(multiFile.getContentType());
+        taskProxy.createTaskStream(task, multiFile);
     }
 }

@@ -1,10 +1,10 @@
-package com.telmomanique.trabalhofinal.ShowMeCliente;
+package com.telmomanique.trabalhofinal.Tika;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ShowMeClienteApplicationTests {
+class TikaApplicationTests {
 
 	@Test
 	void contextLoads() {

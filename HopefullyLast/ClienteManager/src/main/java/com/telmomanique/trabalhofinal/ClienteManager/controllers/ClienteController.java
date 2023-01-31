@@ -60,7 +60,7 @@ public class ClienteController {
     public ResponseEntity<List<Cliente>> getAllClientes(){
         List<Cliente> cliList = clienteService.serviceGetAllClientes();
         if(cliList.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); //TODO CORRIGIR APARECE 204
 
         return new ResponseEntity<>(cliList, HttpStatus.OK);
     }
@@ -77,6 +77,7 @@ public class ClienteController {
         if(opCli.get().getUsername().contentEquals(tempCli.getUsername()) && opCli.get().getId() != tempCli.getId())
             return new ResponseEntity<>(HttpStatus.CONFLICT);
 
+        //TODO Mudar para Service
         Cliente cliente = new Cliente();
         cliente = opCli.get();
         if(!tempCli.getUsername().isEmpty() || !tempCli.getUsername().isBlank())
@@ -85,7 +86,6 @@ public class ClienteController {
             cliente.setPassword(tempCli.getPassword());
         if(!tempCli.getRole().isEmpty() || !tempCli.getRole().isBlank())
             cliente.setRole(tempCli.getRole());
-
 
         opCli = clienteService.serviceUpdateCliente(cliente);
         if(!opCli.isPresent())

@@ -41,8 +41,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
         http.authorizeHttpRequests()
-                .antMatchers("/cliente").hasAnyRole("CLIENTE","ADMIN")
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/cliente").hasAnyRole("ROLE_CLIENTE","ROLE_ADMIN")
+                .antMatchers("/admin").hasRole("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -50,8 +50,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().permitAll()
                 .invalidateHttpSession(true)
-                .and()
-                .exceptionHandling().accessDeniedPage("/deniedLogin")
                 .and()
                 .httpBasic();
     }

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Duration;
 
 @Entity(name= "Task")
 @Data
@@ -16,7 +17,8 @@ public class Task {
     private String hash;
     private String language;
     private String status;
-    private int duration;
+    private Duration duration;
+    private String type;
     private Timestamp int_date;
     private Timestamp end_date;
 

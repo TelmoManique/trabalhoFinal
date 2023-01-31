@@ -13,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -34,7 +33,6 @@ public class WebController {
         if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
             Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
             for(GrantedAuthority g :authorities){
-                System.out.println(g.toString());
                 if(g.toString().compareTo("ROLE_CLIENTE") == 0)
                     return clienteController.index(modelAndView);
                 if(g.toString().compareTo("ROLE_ADMIN") == 0)
@@ -72,14 +70,11 @@ public class WebController {
         cliente.setBlocked(false);
         cliente.setBanned(false);
 
-
         ResponseEntity<Optional<Cliente>> response = clienteProxy.createCliente(cliente);
         if(response.getStatusCode() != HttpStatus.OK)
             throw new ResponseStatusException(response.getStatusCode());
 
-        modelAndView.addObject("cliente", cliente);
-        modelAndView.setViewName("singUpSuccess");
-        return modelAndView;
+        return index(modelAndView);
     }
 
     //URI   POST: /public/signup
