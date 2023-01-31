@@ -49,7 +49,8 @@ services:
       porta: 8800
     depends_on:
       - naming-server
-      - gateway      
+      - gateway
+      
       
   cliente_manager:
     image: cliente-manager:latest
