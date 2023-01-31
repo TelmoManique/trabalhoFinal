@@ -87,32 +87,6 @@ public class TaskController {
         return taskRes;
     }
 
-    @RequestMapping(value = "/createTaskURL", method = RequestMethod.POST)
-    public ResponseEntity<Optional<Task>> createTaskURL(@RequestBody Task task){
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-
-        URL url = null;
-        String text = null;
-
-        task = createTask(task).getBody().get();
-        task.setLanguage(tikaProxy.getLanguage(text));
-
-        Calendar cal = Calendar.getInstance();
-        Timestamp time = new Timestamp(cal.getTimeInMillis());
-        task.setInt_date( time );
-        Duration duration = Duration.between(task.getEnd_date().toInstant(), task.getInt_date().toInstant());
-        task.setDuration( duration );
-        task.setStatus("Finished");
-
-        task = updateTask(task).getBody();
-        return new ResponseEntity<Optional<Task>> (Optional.of(task), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/createTaskStream", method = RequestMethod.POST)
     public ResponseEntity<Optional<Task>> createTaskStream(@RequestBody Task task, @RequestParam("file") MultipartFile multiFile){
         MessageDigest digest;
@@ -145,7 +119,7 @@ public class TaskController {
         task.setLanguage( tikaProxy.getLanguage(text) );
         Calendar cal = Calendar.getInstance();
         Timestamp time = new Timestamp(cal.getTimeInMillis());
-        task.setInt_date( time );
+        task.setEnd_date( time );
         Duration duration = Duration.between(task.getEnd_date().toInstant(), task.getInt_date().toInstant());
         task.setDuration( duration );
         task.setStatus("Finished");

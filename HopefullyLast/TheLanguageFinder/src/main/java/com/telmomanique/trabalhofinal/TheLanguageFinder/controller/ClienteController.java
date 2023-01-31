@@ -67,19 +67,6 @@ public class ClienteController {
         taskProxy.createTaskText(task);
     }
 
-    @RequestMapping(value="/createTask/URL" , method = RequestMethod.GET)
-    public void createTaskURL (@RequestParam("url") String url){
-        if(url.isEmpty()|| url.isBlank())
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-
-        Task task = new Task();
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        task.setCliente_id(clienteProxy.getClienteByName(username).getBody());
-        task.setDocument(url);
-        task.setType("URL");
-        taskProxy.createTaskURL(task);
-    }
-
     @RequestMapping(value ="/createTask/file", method = RequestMethod.POST)
     public void  createTaskFile (@RequestParam("file") MultipartFile multiFile){
         if(multiFile == null)

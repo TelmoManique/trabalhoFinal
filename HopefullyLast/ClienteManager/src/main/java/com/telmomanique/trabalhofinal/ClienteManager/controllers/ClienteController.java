@@ -77,7 +77,6 @@ public class ClienteController {
         if(opCli.get().getUsername().contentEquals(tempCli.getUsername()) && opCli.get().getId() != tempCli.getId())
             return new ResponseEntity<>(HttpStatus.CONFLICT);
 
-        //TODO Mudar para Service
         Cliente cliente = new Cliente();
         cliente = opCli.get();
         if(!tempCli.getUsername().isEmpty() || !tempCli.getUsername().isBlank())
